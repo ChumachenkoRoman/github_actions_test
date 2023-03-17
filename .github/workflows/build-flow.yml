@@ -1,4 +1,4 @@
-name: Release build
+name: build-flow
 on:
   push:
    branches:
