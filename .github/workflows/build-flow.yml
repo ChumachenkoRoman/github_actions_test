@@ -2,7 +2,7 @@ name: build-flow
 on:
   push:
    branches:
-     - master
+     - main
 jobs:
   # Job called "build" is specified here.
   build:
