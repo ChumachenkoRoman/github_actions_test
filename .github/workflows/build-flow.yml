@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Workflow run count
-        run: echo "$GITHUB_RUN_NUMBER"
+        run: echo "hello world"
       # Job steps can be named
       - name: Check out latest commit from ${{ github.ref }}
         uses: actions/checkout@v3
