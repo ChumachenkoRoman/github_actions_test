@@ -8,9 +8,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Workflow run count
+        run: echo $GITHUB_RUN_NUMBER
       # Job steps can be named
       - name: Check out latest commit from ${{ github.ref }}
         uses: actions/checkout@v3
+      - name: Bump app version code.
       # This one allows to install specific java version. Also makes use of gradle caches.
       - name: Setup java
         uses: actions/setup-java@v3
