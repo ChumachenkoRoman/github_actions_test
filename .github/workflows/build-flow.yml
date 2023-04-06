@@ -2,7 +2,7 @@ name: build-flow
 on:
   push:
    branches:
-     - main
+     - 'release/**'
 jobs:
   # Job called "build" is specified here.
   build:
@@ -13,10 +13,10 @@ jobs:
       - name: Check out latest commit from ${{ github.ref }}
         uses: actions/checkout@v3
       # This one allows to install specific java version.
-      #- uses: actions/setup-java@v3
-      #  with: 
-      #    java-version: '11'
-      #    distribution: 'corretto'
+      - uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'corretto'
       # We'll try to use preinstalled java distribution on a runner.
       - name: Validate Gradle wrapper from branch
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
