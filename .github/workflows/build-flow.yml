@@ -7,7 +7,6 @@ jobs:
   # Job called "build" is specified here.
   build:
     runs-on: ubuntu-latest
-    
     steps:
       # Job steps can be named
       - name: Check out latest commit from ${{ github.ref }}
@@ -26,5 +25,6 @@ jobs:
 
   custom_script:
     - name: See if custom script can be executed
-      run: ls -l secret_parser.sh
+      steps:
+        run: ls -l secret_parser.sh
       
