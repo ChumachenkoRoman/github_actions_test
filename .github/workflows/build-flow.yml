@@ -24,7 +24,8 @@ jobs:
         run: ./gradlew bundleRelease
 
   custom_script:
-      steps:
-        - name: See if custom script can be executed
-          run: ls -l secret_parser.sh
+    runs-on: ubuntu-latest
+    steps:
+      - name: See if custom script can be executed
+        run: ls -l secret_parser.sh
       
