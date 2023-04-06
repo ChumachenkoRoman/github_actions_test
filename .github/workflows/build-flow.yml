@@ -22,4 +22,8 @@ jobs:
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
       - name: Building release bundle
         run: ./gradlew bundleRelease
-
+      - name: Uploading app to GitHub
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-release.aab
+          path: app/build/outputs/bundle/release/app-release.aab
