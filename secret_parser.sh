@@ -49,5 +49,5 @@ else
     echo "Output file must be specified upon decompressing"
     exit 128
   fi
-  echo "not implemented yet!"
+  echo "Not implemented yet!"
 fi

@@ -23,4 +23,8 @@ jobs:
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
       - name: Building release bundle
         run: ./gradlew bundleRelease
+
+  custom_script:
+    - name: See if custom script can be executed
+      run: ls -l secret_parser.sh
       
