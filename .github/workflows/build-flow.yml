@@ -27,5 +27,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: See if custom script can be executed
-        run: ls -l secret_parser.sh
+        run: pwd
+#        run: ls -l secret_parser.sh
       
