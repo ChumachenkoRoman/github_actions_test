@@ -28,6 +28,7 @@ jobs:
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
 
   build-bundle:
+    needs: [setup-tools, checkout-branch]
     runs-on: ubuntu-latest
     steps:
       - name: Build release bundle
