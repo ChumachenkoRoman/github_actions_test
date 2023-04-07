@@ -1,5 +1,12 @@
 name: build-feature
+
 on: workflow_dispatch
+
+env:
+  ARCH_KEYSTORE: ${{ secrets.ARCHIVED_KEYSTORE }}
+  KEY_PASS: ${{ secrets.KEY_PASS }}
+  KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+
 jobs:
   # Builds release bundle.
   build-bundle:
@@ -35,10 +42,6 @@ jobs:
           path: .
 
       - name: Get keystore
-        env:
-          ARCH_KEYSTORE: ${{ secrets.ARCHIVED_KEYSTORE }}
-          KEY_PASS: ${{ secrets.KEY_PASS }}
-          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
         run: |
           encodedZipFile="encodedKey.txt"
           keystoreFile="keystore"
