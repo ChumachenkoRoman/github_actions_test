@@ -61,6 +61,6 @@ jobs:
 
       - name: Upload universal apk to GitHub
         uses: actions/upload-artifact@v3
-          with:
-            name: release-app.apk
-            path: release_app.apk
+        with:
+          name: release-app.apk
+          path: release_app.apk
