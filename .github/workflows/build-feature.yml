@@ -26,6 +26,7 @@ jobs:
             --location 'https://github.com/google/bundletool/releases/download/1.8.1/bundletool-all-1.8.1.jar' \
             --output "$bundletool" \
 
+      - name: Checkout branch
         uses: actions/checkout@v3
       - name: Download built bundle
         uses: actions/download-artifact@v3
