@@ -34,7 +34,6 @@ fi
 if [[ $isDecompressing = false ]]; then
   # If decompression flag is not specified we compress input file and encode to base64
   zippedInput="${inputFile}.gz"
-  echo "$inputFile"
   # When no options specified gzip reads stdin and spits result to stdout so we use redirection.
   # So we push inputFile to stdin and redirect output to zippedInput. This is done to preserve original inputFile.
   # Otherwise gzip would just remove it afterwards
@@ -45,9 +44,12 @@ if [[ $isDecompressing = false ]]; then
     base64 -i "$zippedInput"
   fi) && rm "$zippedInput"
 else
-  if [[ $outputFile = null ]]; then
-    echo "Output file must be specified upon decompressing"
+  if [[ $outputFile = null ]] || [[ $inputFile = null ]]; then
+    echo "Both input and output files must be specified upon decompressing"
     exit 128
   fi
-  echo "Not implemented yet!"
+
+  archivedKey="keystore.gz"
+  (base64 -d < "$inputFile" > $archivedKey
+  gzip -d < "$archivedKey" > "$outputFile") && rm "$archivedKey"
 fi
