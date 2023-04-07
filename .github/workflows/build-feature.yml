@@ -50,7 +50,7 @@ jobs:
           ls -l
           universalApk=release_app.apk
           apksFile="app.apks"
-          java -jar ./bundletool.jar build-apks \
+          java -jar bundletool.jar build-apks \
             --mode=universal \
             --local-testing \
             --bundle app-release.aab \
