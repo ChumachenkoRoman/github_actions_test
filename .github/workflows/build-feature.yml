@@ -31,7 +31,7 @@ jobs:
       - name: Download built bundle
         uses: actions/download-artifact@v3
         with:
-          name: release.aab
+          name: app-release.aab
           path: .
 
       - name: Get keystore
@@ -52,7 +52,7 @@ jobs:
           bundletool build-apks \
             --mode=universal \
             --local-testing \
-            --bundle release.aab \
+            --bundle app-release.aab \
             --output "$apksFile" \
             --ks=$keystoreFile \
             --ks-pass=pass:"$KEY_PASS" \
