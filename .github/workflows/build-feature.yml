@@ -47,6 +47,7 @@ jobs:
 
       - name: Generate apk file
         run: |
+          ls -l
           universalApk=release_app.apk
           apksFile="app.apks"
           java -jar ./bundletool.jar build-apks \
