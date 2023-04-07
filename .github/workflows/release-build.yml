@@ -19,7 +19,6 @@ jobs:
         with:
           java-version: '11'
           distribution: 'liberica'
-          java-package: 'jre'
       # We'll try to use preinstalled java distribution on a runner.
       - name: Validate Gradle wrapper from branch
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
