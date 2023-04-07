@@ -26,9 +26,12 @@ jobs:
       # This task enables gradle caching between flow executions. Also it can execute gradle commands.
       # Additional use: just add this task to setup gradle cache and all. Execute any gradlew commands afterwards.
       # Uses gradle-wrapper by default. User may also specify exact version to run builds upon.
-      - name: Gradle setup & build release bundle
+      - name: Gradle setup
         uses: gradle/gradle-build-action@v2
       - name: Build release bundle
+        with:
+      # If flow runs on a non-default GitHub branch then cache saving needs to be enabled via 'cache-read-only: false'!
+          cache-read-only: false
         run: ./gradlew bundleRelease
       - name: Uploading app to GitHub
         uses: actions/upload-artifact@v3
