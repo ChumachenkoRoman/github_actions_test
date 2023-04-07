@@ -49,7 +49,7 @@ jobs:
         run: |
           universalApk=release_app.apk
           apksFile="app.apks"
-          java -jar "$bundletool" build-apks \
+          java -jar ./"$bundletool" build-apks \
             --mode=universal \
             --local-testing \
             --bundle app-release.aab \
