@@ -14,9 +14,9 @@ jobs:
     steps:
       - name: Upload bundle to GitHub
         uses: actions/upload-artifact@v3
-          with:
-            name: app-release.aab
-            path: app/build/outputs/bundle/release/app-release.aab
+        with:
+          name: app-release.aab
+          path: app/build/outputs/bundle/release/app-release.aab
 
 
 #         Bundle Tool downloading
