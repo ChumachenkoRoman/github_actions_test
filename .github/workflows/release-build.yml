@@ -6,7 +6,7 @@ on:
 jobs:
   # Job called "build" is specified here.
   release-build:
-    uses: ./.github/workflows/build-bundle
+    uses: ./.github/workflows/build-bundle.yml
     steps:
       - name: Uploading app to GitHub
         uses: actions/upload-artifact@v3
