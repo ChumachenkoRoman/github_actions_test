@@ -30,6 +30,7 @@ jobs:
         run: |
           bundletool="bundletool.jar"
           curl \
+            --remote-name \
             --location 'https://github.com/google/bundletool/releases/download/1.8.1/bundletool-all-1.8.1.jar' \
             --output bundletool.jar 
 
