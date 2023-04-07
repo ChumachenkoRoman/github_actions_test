@@ -1,5 +1,5 @@
 name: build-feature
-on: workflow-dispatch
+on: workflow_dispatch
 jobs:
   # Builds release bundle.
   build-bundle:
