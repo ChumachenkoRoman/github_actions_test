@@ -1,0 +1,66 @@
+name: build-feature
+on: workflow-dispatch
+jobs:
+  # Builds release bundle.
+  build-bundle:
+    uses: ./.github/workflows/build-bundle.yml
+
+  generate-apk:
+    runs-on: ubuntu-latest
+    needs: [build-bundle]
+    steps:
+
+      # Download Java runtime to run bundle tool.
+      - name: Setup Java
+        uses: actions/setup-java@v3
+          with:
+            java-version: '11'
+            distribution: 'liberica'
+            java-package: 'jre'
+
+      - name: Download Bundle Tool
+        # Single command written in multiline manner.
+        run: |
+          bundletool="bundletool.jar"
+          curl \
+            --location 'https://github.com/google/bundletool/releases/download/1.8.1/bundletool-all-1.8.1.jar' \
+            --output "$bundletool" \
+
+        uses: actions/checkout@v3
+      - name: Download built bundle
+        uses: actions/download-artifact@v3
+        with:
+          name: release.aab
+          path: .
+
+      - name: Get keystore
+        env:
+          ARCH_KEYSTORE: ${{ secrets.ARCHIVED_KEYSTORE }}
+          KEY_PASS: ${{ secrets.KEY_PASS }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+        run: |
+          encodedZipFile="encodedKey.txt"
+          keystoreFile=
+          echo $ARCH_KEYSTORE > "$encodedZipFile"
+          ./secret_parser.sh -d "$encodedZipFile" "$keystoreFile"
+
+      - name: Generate apk file
+        run: |
+          universalApk=release_app.apk
+          apksFile="app.apks"
+          bundletool build-apks \
+            --mode=universal \
+            --local-testing \
+            --bundle release.aab \
+            --output "$apksFile" \
+            --ks=$keystoreFile \
+            --ks-pass=pass:"$KEY_PASS" \
+            --ks-key-alias="$KEY_ALIAS" \
+            --key-pass=pass:"$KEY_PASS"
+          unzip -p "$apksFile" universal.apk > $universalApk
+
+      - name: Upload universal apk to GitHub
+        uses: actions/upload-artifact@v3
+          with:
+            name: release-app.apk
+            path: release_app.apk
