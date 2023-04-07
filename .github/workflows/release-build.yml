@@ -27,8 +27,8 @@ jobs:
       # Uses gradle-wrapper by default. User may also specify exact version to run builds upon.
       - name: Gradle setup & build release bundle
         uses: gradle/gradle-build-action@v2
-        with:
-         arguments: bundleRelease
+      - name: Build release bundle
+        run: ./gradlew bundleRelease
       - name: Uploading app to GitHub
         uses: actions/upload-artifact@v3
         with:
