@@ -5,7 +5,7 @@ on:
      - 'release/**'
 jobs:
   # Job called "build" is specified here.
-  build:
+  release-build:
     runs-on: ubuntu-latest
     steps:
       - name: Workflow run count
