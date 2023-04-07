@@ -6,9 +6,9 @@ jobs:
     steps:
       - name: Setup JDK
         uses: actions/setup-java@v3
-          with:
-            java-version: '11'
-            distribution: 'liberica'
+        with:
+          java-version: '11'
+          distribution: 'liberica'
       # This task enables gradle caching between flow executions. Also it can execute gradle commands.
       # Additional use: just add this task to setup gradle cache and all. Execute any gradlew commands afterwards.
       # Uses gradle-wrapper by default. User may also specify exact version to run builds upon.
