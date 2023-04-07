@@ -13,10 +13,10 @@ jobs:
       # Download Java runtime to run bundle tool.
       - name: Setup Java
         uses: actions/setup-java@v3
-          with:
-            java-version: '11'
-            distribution: 'liberica'
-            java-package: 'jre'
+        with:
+          java-version: '11'
+          distribution: 'liberica'
+          java-package: 'jre'
 
       - name: Download Bundle Tool
         # Single command written in multiline manner.
