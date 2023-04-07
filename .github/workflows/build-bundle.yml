@@ -4,11 +4,13 @@ jobs:
   build-bundle:
     runs-on: ubuntu-latest
     steps:
+
       - name: Setup JDK
         uses: actions/setup-java@v3
         with:
           java-version: '11'
           distribution: 'liberica'
+
       # This task enables gradle caching between flow executions. Also it can execute gradle commands.
       # Additional use: just add this task to setup gradle cache and all. Execute any gradlew commands afterwards.
       # Uses gradle-wrapper by default. User may also specify exact version to run builds upon.
@@ -17,10 +19,19 @@ jobs:
       # If flow runs on a non-default GitHub branch then cache saving needs to be enabled via 'cache-read-only: false'!
         with:
           cache-read-only: false
+
       - name: Check out latest commit from ${{ github.ref }}
         uses: actions/checkout@v3
+
       - name: Check Gradle Wrapper authenticity
         # Use exact commit instead of version tag for better security.
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+
       - name: Build release bundle
         run: ./gradlew bundleRelease
+
+      - name: Upload bundle to GitHub
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-release.aab
+          path: app/build/outputs/bundle/release/app-release.aab

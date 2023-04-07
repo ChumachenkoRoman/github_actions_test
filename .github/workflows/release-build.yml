@@ -8,16 +8,5 @@ jobs:
   release-build:
     uses: ./.github/workflows/build-bundle.yml
 
-  publish-bundle:
-    runs-on: ubuntu-latest
-    needs: [release-build]
-    steps:
-      - name: Upload bundle to GitHub
-        uses: actions/upload-artifact@v3
-        with:
-          name: app-release.aab
-          path: app/build/outputs/bundle/release/app-release.aab
-
-
 #         Bundle Tool downloading
 #          curl --location 'https://github.com/google/bundletool/releases/download/1.8.1/bundletool-all-1.8.1.jar' --output bundletool.jar
