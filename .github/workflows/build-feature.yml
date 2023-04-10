@@ -27,6 +27,15 @@ jobs:
           distribution: 'liberica'
           java-package: 'jre'
 
+      - name: Checkout branch
+        uses: actions/checkout@v3
+      - name: Download built bundle
+        uses: actions/download-artifact@v3
+        with:
+          name: app-release.aab
+          path: .
+
+
       - name: Download Bundle Tool
         # Single command written in multiline manner.
         # -4 dictates to use only IPv4. -L dictates to redo request if resource was moved.
@@ -38,14 +47,6 @@ jobs:
             -o bundletool.jar
           
           ls -l bundletool.jar
-
-      - name: Checkout branch
-        uses: actions/checkout@v3
-      - name: Download built bundle
-        uses: actions/download-artifact@v3
-        with:
-          name: app-release.aab
-          path: .
 
       - name: Get keystore
         run: |
