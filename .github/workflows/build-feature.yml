@@ -11,12 +11,12 @@ env:
 
 jobs:
   # Builds release bundle.
-#  build-bundle:
-#    uses: ./.github/workflows/build-bundle.yml
+  build-bundle:
+    uses: ./.github/workflows/build-bundle.yml
 
   generate-apk:
     runs-on: ubuntu-latest
-#    needs: [build-bundle]
+    needs: [build-bundle]
     steps:
 
       # Download Java runtime to run bundle tool.
