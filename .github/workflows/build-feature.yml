@@ -31,12 +31,11 @@ jobs:
         # Single command written in multiline manner.
         # -4 dictates to use only IPv4. -L dictates to redo request if resource was moved.
         run: |
-          bundletool="bundletool.jar"
           curl \
             'https://github.com/google/bundletool/releases/download/1.8.1/bundletool-all-1.8.1.jar' \
             -4 \
             -sL \
-            -o "$bundletool"
+            -o bundletool.jar
 
       - name: Checkout branch
         uses: actions/checkout@v3
@@ -49,15 +48,11 @@ jobs:
       - name: Get keystore
         run: |
           encodedZipFile="encodedKey.txt"
-          keystoreFile="keystore"
           echo $ARCH_KEYSTORE > "$encodedZipFile"
-          ./secret_parser.sh -d "$encodedZipFile" "$keystoreFile"
+          ./secret_parser.sh -d "$encodedZipFile" keystore
 
       - name: Generate apk file
         run: |
-          
-          java -jar bundletool.jar
-
           universalApk=release_app.apk
           apksFile="app.apks"
           java -jar bundletool.jar build-apks \
