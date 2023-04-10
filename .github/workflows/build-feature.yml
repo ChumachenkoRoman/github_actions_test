@@ -33,7 +33,8 @@ jobs:
           curl \
             'https://github.com/google/bundletool/releases/download/1.8.1/bundletool-all-1.8.1.jar' \
             -4 \
-            -L \ 
+            -L \
+            -s \
             -o bundletool.jar 
 
       - name: Checkout branch
