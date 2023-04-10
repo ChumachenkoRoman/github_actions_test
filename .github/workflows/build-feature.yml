@@ -34,28 +34,28 @@ jobs:
             'https://github.com/google/bundletool/releases/download/1.8.1/bundletool-all-1.8.1.jar' \
             -4 \
             -sL \
-            -o "$bundletool" 
+            -o "$bundletool"
+
+      - name: Checkout branch
+        uses: actions/checkout@v3
+      - name: Download built bundle
+        uses: actions/download-artifact@v3
+        with:
+          name: app-release.aab
+          path: .
+
+      - name: Get keystore
+        run: |
+          encodedZipFile="encodedKey.txt"
+          keystoreFile="keystore"
+          echo $ARCH_KEYSTORE > "$encodedZipFile"
+          ./secret_parser.sh -d "$encodedZipFile" "$keystoreFile"
+
+      - name: Generate apk file
+        run: |
           
           java -jar "$bundletool"
 
-#      - name: Checkout branch
-#        uses: actions/checkout@v3
-#      - name: Download built bundle
-#        uses: actions/download-artifact@v3
-#        with:
-#          name: app-release.aab
-#          path: .
-#
-#      - name: Get keystore
-#        run: |
-#          encodedZipFile="encodedKey.txt"
-#          keystoreFile="keystore"
-#          echo $ARCH_KEYSTORE > "$encodedZipFile"
-#          ./secret_parser.sh -d "$encodedZipFile" "$keystoreFile"
-#
-#      - name: Generate apk file
-#        run: |
-#          ls -l
 #          universalApk=release_app.apk
 #          apksFile="app.apks"
 #          java -jar "$bundletool" build-apks \
