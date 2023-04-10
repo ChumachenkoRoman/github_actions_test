@@ -36,6 +36,8 @@ jobs:
             -4 \
             -sL \
             -o bundletool.jar
+          
+          ls -l bundletool.jar
 
       - name: Checkout branch
         uses: actions/checkout@v3
