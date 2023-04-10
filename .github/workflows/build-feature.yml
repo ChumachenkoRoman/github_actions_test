@@ -6,6 +6,7 @@ env:
   ARCH_KEYSTORE: ${{ secrets.ARCHIVED_KEYSTORE }}
   KEY_PASS: ${{ secrets.KEY_PASS }}
   KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+  # These vars contain files which are reused between steps.
   BUNDLE_TOOL: bundletool.jar
   KEYSTORE: keystore
 
@@ -20,6 +21,8 @@ jobs:
     steps:
 
       # Download Java runtime to run bundle tool.
+      # Executed first because otherwise may cause troubles as it cleans working directory from any untracked files
+      # (executes git clean with some flags). We can prevent it by adding "clean: false".
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
@@ -44,28 +47,24 @@ jobs:
             'https://github.com/google/bundletool/releases/download/1.8.1/bundletool-all-1.8.1.jar' \
             -4 \
             -sL \
-            -o bundletool.jar
-          
-          ls -l bundletool.jar
+            -o "$BUNDLE_TOOL"
 
       - name: Get keystore
         run: |
           encodedZipFile="encodedKey.txt"
           echo $ARCH_KEYSTORE > "$encodedZipFile"
-          ./secret_parser.sh -d "$encodedZipFile" keystore
+          ./secret_parser.sh -d "$encodedZipFile" "$KEYSTORE"
 
       - name: Generate apk file
         run: |
-          ls -l bundletool.jar
-          
           universalApk=release_app.apk
           apksFile="app.apks"
-          java -jar bundletool.jar build-apks \
+          java -jar "$BUNDLE_TOOL" build-apks \
             --mode=universal \
             --local-testing \
             --bundle app-release.aab \
             --output "$apksFile" \
-            --ks=keystore \
+            --ks="$KEYSTORE" \
             --ks-pass=pass:"$KEY_PASS" \
             --ks-key-alias="$KEY_ALIAS" \
             --key-pass=pass:"$KEY_PASS"
