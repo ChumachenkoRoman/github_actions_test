@@ -44,12 +44,12 @@ jobs:
 #          name: app-release.aab
 #          path: .
 
-      - name: Get keystore
-        run: |
-          encodedZipFile="encodedKey.txt"
-          keystoreFile="keystore"
-          echo $ARCH_KEYSTORE > "$encodedZipFile"
-          ./secret_parser.sh -d "$encodedZipFile" "$keystoreFile"
+#      - name: Get keystore
+#        run: |
+#          encodedZipFile="encodedKey.txt"
+#          keystoreFile="keystore"
+#          echo $ARCH_KEYSTORE > "$encodedZipFile"
+#          ./secret_parser.sh -d "$encodedZipFile" "$keystoreFile"
 
       - name: Generate apk file
         run: |
