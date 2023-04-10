@@ -33,9 +33,10 @@ jobs:
           curl \
             'https://github.com/google/bundletool/releases/download/1.8.1/bundletool-all-1.8.1.jar' \
             -4 \
-            -L \
-            -s \
-            -o bundletool.jar 
+            -sL \
+            -o "$bundletool" 
+          
+          ls -l "$bundletool"
 
       - name: Checkout branch
         uses: actions/checkout@v3
@@ -57,7 +58,7 @@ jobs:
           ls -l
           universalApk=release_app.apk
           apksFile="app.apks"
-          java -jar bundletool.jar build-apks \
+          java -jar "$bundletool" build-apks \
             --mode=universal \
             --local-testing \
             --bundle app-release.aab \
