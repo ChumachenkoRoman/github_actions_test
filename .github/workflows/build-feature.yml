@@ -9,12 +9,12 @@ env:
 
 jobs:
   # Builds release bundle.
-  build-bundle:
-    uses: ./.github/workflows/build-bundle.yml
+#  build-bundle:
+#    uses: ./.github/workflows/build-bundle.yml
 
   generate-apk:
     runs-on: ubuntu-latest
-    needs: [build-bundle]
+#    needs: [build-bundle]
     steps:
 
       # Download Java runtime to run bundle tool.
@@ -36,41 +36,41 @@ jobs:
             -sL \
             -o "$bundletool" 
           
-          ls -l "$bundletool"
+          java -jar "$bundletool"
 
-      - name: Checkout branch
-        uses: actions/checkout@v3
-      - name: Download built bundle
-        uses: actions/download-artifact@v3
-        with:
-          name: app-release.aab
-          path: .
-
-      - name: Get keystore
-        run: |
-          encodedZipFile="encodedKey.txt"
-          keystoreFile="keystore"
-          echo $ARCH_KEYSTORE > "$encodedZipFile"
-          ./secret_parser.sh -d "$encodedZipFile" "$keystoreFile"
-
-      - name: Generate apk file
-        run: |
-          ls -l
-          universalApk=release_app.apk
-          apksFile="app.apks"
-          java -jar "$bundletool" build-apks \
-            --mode=universal \
-            --local-testing \
-            --bundle app-release.aab \
-            --output "$apksFile" \
-            --ks=$keystoreFile \
-            --ks-pass=pass:"$KEY_PASS" \
-            --ks-key-alias="$KEY_ALIAS" \
-            --key-pass=pass:"$KEY_PASS"
-          unzip -p "$apksFile" universal.apk > $universalApk
-
-      - name: Upload universal apk to GitHub
-        uses: actions/upload-artifact@v3
-        with:
-          name: release-app.apk
-          path: release_app.apk
+#      - name: Checkout branch
+#        uses: actions/checkout@v3
+#      - name: Download built bundle
+#        uses: actions/download-artifact@v3
+#        with:
+#          name: app-release.aab
+#          path: .
+#
+#      - name: Get keystore
+#        run: |
+#          encodedZipFile="encodedKey.txt"
+#          keystoreFile="keystore"
+#          echo $ARCH_KEYSTORE > "$encodedZipFile"
+#          ./secret_parser.sh -d "$encodedZipFile" "$keystoreFile"
+#
+#      - name: Generate apk file
+#        run: |
+#          ls -l
+#          universalApk=release_app.apk
+#          apksFile="app.apks"
+#          java -jar "$bundletool" build-apks \
+#            --mode=universal \
+#            --local-testing \
+#            --bundle app-release.aab \
+#            --output "$apksFile" \
+#            --ks=$keystoreFile \
+#            --ks-pass=pass:"$KEY_PASS" \
+#            --ks-key-alias="$KEY_ALIAS" \
+#            --key-pass=pass:"$KEY_PASS"
+#          unzip -p "$apksFile" universal.apk > $universalApk
+#
+#      - name: Upload universal apk to GitHub
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: release-app.apk
+#          path: release_app.apk
