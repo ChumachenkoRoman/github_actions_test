@@ -36,13 +36,13 @@ jobs:
             -sL \
             -o "$bundletool"
 
-      - name: Checkout branch
-        uses: actions/checkout@v3
-      - name: Download built bundle
-        uses: actions/download-artifact@v3
-        with:
-          name: app-release.aab
-          path: .
+#      - name: Checkout branch
+#        uses: actions/checkout@v3
+#      - name: Download built bundle
+#        uses: actions/download-artifact@v3
+#        with:
+#          name: app-release.aab
+#          path: .
 
       - name: Get keystore
         run: |
