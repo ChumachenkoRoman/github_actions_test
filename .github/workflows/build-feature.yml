@@ -27,12 +27,14 @@ jobs:
 
       - name: Download Bundle Tool
         # Single command written in multiline manner.
+        # -4 dictates to use only IPv4. -L dictates to redo request if resource was moved.
         run: |
           bundletool="bundletool.jar"
           curl \
-            --remote-name \
-            --location 'https://github.com/google/bundletool/releases/download/1.8.1/bundletool-all-1.8.1.jar' \
-            --output bundletool.jar 
+            'https://github.com/google/bundletool/releases/download/1.8.1/bundletool-all-1.8.1.jar' \
+            -4 \
+            -L \ 
+            -o bundletool.jar 
 
       - name: Checkout branch
         uses: actions/checkout@v3
