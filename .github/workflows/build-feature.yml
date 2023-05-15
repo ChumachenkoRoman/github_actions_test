@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Where is AWS CLI?
-        run: where aws
+        run: aws help
 
   # Builds release bundle.
   build-bundle:
