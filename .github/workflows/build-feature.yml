@@ -11,13 +11,6 @@ env:
   KEYSTORE: keystore
 
 jobs:
-
-  test-aws-cli:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Where is AWS CLI?
-        run: aws help
-
   # Builds release bundle.
   build-bundle:
     uses: ./.github/workflows/build-bundle.yml
