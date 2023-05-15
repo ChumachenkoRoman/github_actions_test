@@ -11,6 +11,13 @@ env:
   KEYSTORE: keystore
 
 jobs:
+
+  test-aws-cli:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Where is AWS CLI?
+        run: where aws
+
   # Builds release bundle.
   build-bundle:
     uses: ./.github/workflows/build-bundle.yml
@@ -19,7 +26,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build-bundle]
     steps:
-
       # Download Java runtime to run bundle tool.
       # Executed first because otherwise may cause troubles as it cleans working directory from any untracked files
       # (executes git clean with some flags). We can prevent it by adding "clean: false".
