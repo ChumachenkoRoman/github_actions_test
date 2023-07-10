@@ -35,3 +35,8 @@ jobs:
         with:
           name: app-release.aab
           path: app/build/outputs/bundle/release/app-release.aab
+
+      - name: Gradle logs?
+        if: always()
+        run: ls -trR ~/.gradle/daemon
+
