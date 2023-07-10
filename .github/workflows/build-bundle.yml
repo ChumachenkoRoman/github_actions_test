@@ -40,7 +40,9 @@ jobs:
         id: daemon-log-search
         if: always()
         run: |
-          logFile=find ~/.gradle/daemon/ -name "*.out.log"
+          echo 'About to search file'
+          logFile=find ~/.gradle/daemon -name "*.out.log"
+          echo "Log file(s): $logFile"
           echo "DAEMON_LOGS=$logFile" >> $GITHUB_OUTPUT
 
       - name: Upload Gradle daemon logs to GitHub
