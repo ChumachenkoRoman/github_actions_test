@@ -38,7 +38,7 @@ jobs:
 
       - name: Find daemon logs
         id: daemon-log-search
-        if: always()
+        if: failure()
         run: |
           echo 'About to search file'
           logFile=$(find ~/.gradle/daemon -name "*.out.log")
@@ -46,6 +46,7 @@ jobs:
           echo "DAEMON_LOGS=$logFile" >> $GITHUB_OUTPUT
 
       - name: Upload Gradle daemon logs to GitHub
+        if: failure()
         uses: actions/upload-artifact@v3
         with:
           name: gradle_daemon.log
