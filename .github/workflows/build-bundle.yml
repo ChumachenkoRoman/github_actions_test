@@ -40,3 +40,6 @@ jobs:
         if: always()
         run: ls -trR ~/.gradle/daemon
 
+      - name: Latest Gradle daemon log
+        if: always()
+        run: ls -trR ~/.gradle/daemon | grep log | tail -1
