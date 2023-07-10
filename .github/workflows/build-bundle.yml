@@ -42,4 +42,10 @@ jobs:
 
       - name: Latest Gradle daemon log
         if: always()
-        run: ls -trR ~/.gradle/daemon | grep log | tail -1
+        run: |
+            logFile=ls -trR ~/.gradle/daemon | grep log | tail -1
+            echo "DAEMON_LOG_FILE"
+
+      - name: Find daemon logs
+        if: always()
+        run: find ~/.gradle/daemon/ -name "*.out.log"
