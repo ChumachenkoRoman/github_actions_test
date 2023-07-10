@@ -41,7 +41,7 @@ jobs:
         if: always()
         run: |
           echo 'About to search file'
-          logFile=find ~/.gradle/daemon -name "*.out.log"
+          logFile=$(find ~/.gradle/daemon -name "*.out.log")
           echo "Log file(s): $logFile"
           echo "DAEMON_LOGS=$logFile" >> $GITHUB_OUTPUT
 
