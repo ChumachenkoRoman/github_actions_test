@@ -35,3 +35,19 @@ jobs:
         with:
           name: app-release.aab
           path: app/build/outputs/bundle/release/app-release.aab
+
+      - name: Find daemon logs
+        id: daemon-log-search
+        if: failure()
+        run: |
+          echo 'About to search file'
+          logFile=$(find ~/.gradle/daemon -name "*.out.log")
+          echo "Log file(s): $logFile"
+          echo "DAEMON_LOGS=$logFile" >> $GITHUB_OUTPUT
+
+      - name: Upload Gradle daemon logs to GitHub
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: gradle_daemon.log
+          path: ${{ steps.daemon-log-search.outputs.DAEMON_LOGS }}
