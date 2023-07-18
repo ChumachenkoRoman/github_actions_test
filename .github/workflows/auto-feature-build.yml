@@ -4,8 +4,9 @@ on: pull_request
 jobs:
 
   say-hi:
-    if: ${{ github.event.label.name == 'testReady' }}
+#    if: ${{ contains(github.event.pull_request.labels.*.name, 'testReady') }}
     runs-on: ubuntu-latest
     steps:
-      - name: Greet if this is "target_label"
-        run: echo 'Hello there!'
+#      - name: Greet if this is "target_label"
+      - name: Print PR labels
+        run: echo ${{ github.event.pull_request.labels.*.name }}
