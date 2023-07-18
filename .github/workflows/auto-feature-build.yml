@@ -1,5 +1,7 @@
 name: Feature build
-on: pull_request
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled]
 
 jobs:
 
