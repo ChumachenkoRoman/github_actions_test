@@ -6,7 +6,7 @@ on:
 jobs:
 
   build:
-    if: contains(github.event.pull_request.labels.*.name, 'ready_for_test')
+    if: contains(github.event.pull_request.labels.*.name, 'ready for test')
     runs-on: ubuntu-latest
     steps:
       - name: Print PR labels
