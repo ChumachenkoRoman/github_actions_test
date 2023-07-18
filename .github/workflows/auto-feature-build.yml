@@ -1,14 +1,13 @@
 name: Feature build
 on:
   pull_request:
-    types: [opened, synchronize, reopened, labeled]
+    types: [opened, reopened, synchronize, labeled]
 
 jobs:
 
-  say-hi:
-#    if: ${{ contains(github.event.pull_request.labels.*.name, 'testReady') }}
+  build:
+    if: contains(github.event.pull_request.labels.*.name, 'ready_for_test')
     runs-on: ubuntu-latest
     steps:
-#      - name: Greet if this is "target_label"
       - name: Print PR labels
-        run: echo '${{ toJson(github.event.pull_request.labels.*.name) }}'
+        run: echo 'Conditions are satisfied; build should be ran'
