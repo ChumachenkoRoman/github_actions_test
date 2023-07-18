@@ -1,5 +1,15 @@
 name: build-feature
+
 on: workflow_dispatch
+
+env:
+  ARCH_KEYSTORE: ${{ secrets.ARCHIVED_KEYSTORE }}
+  KEY_PASS: ${{ secrets.KEY_PASS }}
+  KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+  # These vars contain files which are reused between steps.
+  BUNDLE_TOOL: bundletool.jar
+  KEYSTORE: keystore
+
 jobs:
   # Builds release bundle.
   build-bundle:
@@ -9,8 +19,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build-bundle]
     steps:
-
       # Download Java runtime to run bundle tool.
+      # Executed first because otherwise may cause troubles as it cleans working directory from any untracked files
+      # (executes git clean with some flags). We can prevent it by adding "clean: false".
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
@@ -18,43 +29,41 @@ jobs:
           distribution: 'liberica'
           java-package: 'jre'
 
-      - name: Download Bundle Tool
-        # Single command written in multiline manner.
-        run: |
-          bundletool="bundletool.jar"
-          curl \
-            --location 'https://github.com/google/bundletool/releases/download/1.8.1/bundletool-all-1.8.1.jar' \
-            --output "$bundletool" \
-
       - name: Checkout branch
         uses: actions/checkout@v3
       - name: Download built bundle
         uses: actions/download-artifact@v3
         with:
-          name: release.aab
+          name: app-release.aab
           path: .
 
+
+      - name: Download Bundle Tool
+        # Single command written in multiline manner.
+        # -4 dictates to use only IPv4. -L dictates to redo request if resource was moved.
+        run: |
+          curl \
+            'https://github.com/google/bundletool/releases/download/1.8.1/bundletool-all-1.8.1.jar' \
+            -4 \
+            -sL \
+            -o "$BUNDLE_TOOL"
+
       - name: Get keystore
-        env:
-          ARCH_KEYSTORE: ${{ secrets.ARCHIVED_KEYSTORE }}
-          KEY_PASS: ${{ secrets.KEY_PASS }}
-          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
         run: |
           encodedZipFile="encodedKey.txt"
-          keystoreFile=
           echo $ARCH_KEYSTORE > "$encodedZipFile"
-          ./secret_parser.sh -d "$encodedZipFile" "$keystoreFile"
+          ./secret_parser.sh -d "$encodedZipFile" "$KEYSTORE"
 
       - name: Generate apk file
         run: |
           universalApk=release_app.apk
           apksFile="app.apks"
-          bundletool build-apks \
+          java -jar "$BUNDLE_TOOL" build-apks \
             --mode=universal \
             --local-testing \
-            --bundle release.aab \
+            --bundle app-release.aab \
             --output "$apksFile" \
-            --ks=$keystoreFile \
+            --ks="$KEYSTORE" \
             --ks-pass=pass:"$KEY_PASS" \
             --ks-key-alias="$KEY_ALIAS" \
             --key-pass=pass:"$KEY_PASS"

@@ -1,0 +1,13 @@
+name: Feature build
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, labeled]
+
+jobs:
+
+  build:
+    if: contains(github.event.pull_request.labels.*.name, 'ready for test')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print PR labels
+        run: echo 'Conditions are satisfied; build should be ran'
