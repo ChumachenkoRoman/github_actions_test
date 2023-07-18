@@ -1,0 +1,13 @@
+name: Feature build
+on:
+  pull_request:
+    types: [ labeled ]
+
+jobs:
+
+  say-hi:
+    if: ${{ github.event.label.name == 'testReady' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Greet if this is "target_label"
+        run: echo 'Hello there!'
