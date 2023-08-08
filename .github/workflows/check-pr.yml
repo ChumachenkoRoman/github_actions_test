@@ -6,9 +6,12 @@ on:
 
 jobs:
   check-reviews:
-    if: ${{ github.event.review.state == 'approved' }}
+#    if: ${{ github.event.review.state == 'approved' }}
     runs-on: ubuntu-20.04
     steps:
+      - name: Log event data
+        run:
+          echo "${{ toJSON(github.event) }}"
       - name: Log numbers
         run: |
           total=
