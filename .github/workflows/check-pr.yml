@@ -1,0 +1,21 @@
+# This workflow adds 'ready for test' label when all requested reviewers approved this PR.
+name: Check review count
+on:
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  check-reviews:
+#    if: ${{ github.event.review.state == 'approved' }}
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Log event data
+        run:
+          echo "${{ toJSON(github.event) }}"
+      - name: Log numbers
+        run: |
+          total=
+          echo requested reviews '${{ toJSON(github.event.pull_request.requested_reviewers) }}'
+          echo reviews I got ${{ toJSON(github.event.pull_request.reviews) }}
+#          echo 'Total reviewers asked: ${{ github.event.pull_request.requested_reviewers }}'
+#          echo 'Got approved by ${{ github.event.pull_request.reviews }} people'
