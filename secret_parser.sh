@@ -31,6 +31,7 @@ else
 fi
 
 
+
 if [[ $isDecompressing = false ]]; then
   # If decompression flag is not specified we compress input file and encode to base64
   zippedInput="${inputFile}.gz"
