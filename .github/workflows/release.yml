@@ -1,0 +1,15 @@
+name: Prepare release
+on:
+  push:
+    branches: [fake_main]
+    tags: [release**]
+
+jobs:
+
+  publish:
+    runs-on: ubuntu-20.04
+    steps:
+
+      - name: Checkout branch
+        run: |
+          echo "Run with ref: ${{ github.ref }}"
