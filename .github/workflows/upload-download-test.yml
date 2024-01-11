@@ -1,0 +1,28 @@
+name: Upload-Download Test
+on: workflow_dispatch
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Create dummy file
+        run: |
+          touch dummy.txt
+          echo "Hello world" > dummy.txt
+
+      - name: Upload dummy file
+        uses: actions/upload-artifact@v2
+        with:
+          name: dummy.txt
+          path: dummy.txt
+
+      - name: Remove local file
+        run: rm dummy.txt
+
+      - name: Download dummy file
+        uses: actions/download-artifact@v2
+        with:
+          name: dummy.txt
+
+      - name: Check downloaded file
+        run: ls -l
