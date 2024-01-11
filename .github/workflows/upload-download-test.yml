@@ -21,8 +21,6 @@ jobs:
 
       - name: Download dummy file
         uses: actions/download-artifact@v2
-        with:
-          name: dummy.txt
 
       - name: Check downloaded file
         run: ls -l
